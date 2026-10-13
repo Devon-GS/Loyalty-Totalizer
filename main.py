@@ -37,36 +37,27 @@ start_column = 2  # Column B
 
 # Loop through each Excel file and extract data
 for file in excel_files_filtered:
-    file_path = os.path.join(folder_path, file)
+	file_path = os.path.join(folder_path, file)
 
-    # Get Cell F9 Value
-    current_workbook = load_workbook(file_path, data_only=True)
-    current_worksheet = current_workbook.active
-    cell_f9_value = current_worksheet['F9'].value
-    current_workbook.save(file_path)
-    current_workbook.close()
+	# Get Cell F9 Value
+	current_workbook = load_workbook(file_path, data_only=True)
+	current_worksheet = current_workbook["CASH UP"]
+	cell_f9_value = current_worksheet['F9'].value
+	
+	print(f"File: {file}")
+	print(f"Loyaty amount: {cell_f9_value}")
+	print()
+	current_workbook.close()
 
-    # Print Cell F9 Value to Cell H9
-    # current_workbook = load_workbook(file_path)
-    # current_worksheet = current_workbook.active
-    # current_worksheet['H9'] = cell_f9_value
-    # current_workbook.save(file_path)
-    # current_workbook.close()
+	# # Write the values to the output worksheet
+	output_worksheet.cell(row=start_row, column=start_column, value=cell_f9_value)
 
-    # # Write the values to the output worksheet
-    output_worksheet.cell(row=start_row, column=start_column, value=cell_f9_value)
+	# Increment the row for the next iteration
+	start_row += 1
 
-    # Increment the row for the next iteration
-    start_row += 1
-
-    # Print the values
-    print(f"File: {file}")
-    print(f"Loyaty amount: {cell_f9_value}")
-    print()
-
-    # Save the changes and close the output workbook
-    output_workbook.save(output_file)
-    output_workbook.close()
+	# Save the changes and close the output workbook
+	output_workbook.save(output_file)
+	output_workbook.close()
 
 # Add a user input prompt to keep the console window open
 print()
